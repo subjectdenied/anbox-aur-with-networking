@@ -10,16 +10,20 @@ license=('GPL3')
 makedepends=('cmake' 'git' 'glm' 'dbus-cpp' 'lxc' 'sdl2' 'protobuf' 'gmock' 'boost')
 source=("git+https://github.com/anbox/anbox.git"
 	'anbox-container-manager.service'
+	'anbox-container-bridge.service'
 	'anbox-session-manager.service'
+	'anbox-bridge.sh'
 	'99-anbox.rules'
 	'anbox.conf'
 	'anbox.desktop')
 sha256sums=('SKIP'
-            '49aa34a582de04540a01754976db89f2c05d6170f7192fec0ff14e23d14320d2'
-            '1f22dbb5a3ca6925bbf62899cd0f0bbaa0b77c879adcdd12ff9d43adfa61b1d8'
-            '6faa2e596b6b5dc0d01ae66115e4d206351bde98d1726ef4bd4d4f252a1b4862'
-            '3e07dc524a827c1651857cce28a06c1565bc5188101c140ed213bbafedc5abff'
-            '7332d09865be553a259a53819cebddd21f661c7a251d78c2f46acd75c66676b6')
+	    'SKIP'
+            'SKIP'
+            'SKIP'
+	    'SKIP' 
+	    'SKIP'
+            'SKIP'	
+            'SKIP')
 
 pkgver() {
   cd ${srcdir}/${_pkgname}
@@ -53,10 +57,12 @@ package_anbox-git() {
   make -C build DESTDIR="$pkgdir" install
 
   install -Dm 644 -t $pkgdir/usr/lib/systemd/system $srcdir/anbox-container-manager.service
+  install -Dm 644 -t $pkgdir/usr/lib/systemd/system $srcdir/anbox-container-bridge.service
   install -Dm 644 -t $pkgdir/usr/lib/systemd/user $srcdir/anbox-session-manager.service
   install -Dm 644 -t $pkgdir/usr/lib/udev/rules.d $srcdir/99-anbox.rules
   install -Dm 644 -t $pkgdir/usr/share/applications $srcdir/anbox.desktop
   install -Dm 644 snap/gui/icon.png $pkgdir/usr/share/pixmaps/anbox.png
+  install -Dm 755 -t $pkgdir/usr/bin $srcdir/anbox-bridge.sh	
 }
 
 package_anbox-modules-dkms-git() {

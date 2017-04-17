@@ -1,8 +1,12 @@
 [Unit]
 Description=Anbox Container Manager
+Wants=anbox-container-bridge.service
+After=anbox-container-bridge.service
 
 [Service]
-ExecStart=/usr/bin/anbox container-manager --privileged
+ExecStartPre=/sbin/modprobe ashmem_linux
+ExecStartPre=/sbin/modprobe binder_linux
+ExecStart=/usr/bin/anbox container-manager --privileged --gles-driver=host
 
 [Install]
 WantedBy=multi-user.target
