@@ -2,7 +2,7 @@
 
 pkgname=('anbox-git' 'anbox-modules-dkms-git')
 _pkgname=anbox
-pkgver=466
+pkgver=r493.7dc4a1b
 pkgrel=2
 arch=('x86_64')
 url="http://anbox.io/"
@@ -34,6 +34,7 @@ prepare() {
   cd "$srcdir/${_pkgname}"
 
   # Don't build tests
+  truncate -s 0 cmake/FindGMock.cmake
   truncate -s 0 tests/CMakeLists.txt
 
   # Fix loading translators
